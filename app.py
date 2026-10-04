@@ -216,7 +216,7 @@ am1.metric("Varianz entlang der Richtung", f"{var_here:.2f}", help=f"Gesamtvaria
 am2.metric("Anteil der Gesamtvarianz", f"{var_here / total * 100:.0f} %")
 am3.metric(
     "Rekonstruktionsfehler", f"{resid_here:.2f}",
-    help="Mittlere quadratische Abweichung der Touren von ihrer Projektion. Varianz + Fehler = Gesamtvarianz - was die Richtung nicht erklärt, geht verloren.",
+    help="Mittlere quadratische Abweichung der Touren von ihrer Projektion. Varianz + Fehler = Gesamtvarianz (bis auf den Faktor (n−1)/n) - was die Richtung nicht erklärt, geht verloren.",
 )
 am4.metric(
     "Abstand zum Optimum", f"{lam_max - var_here:.2f}",
@@ -278,7 +278,7 @@ st.plotly_chart(build_reconstruction(z_original, z_recon, C.FEATURE_NAMES, recon
 lost = float(model.explained_variance[recon_k:].sum() / model.explained_variance.sum() * 100)
 rc1, rc2 = st.columns(2)
 rc1.metric("Rekonstruktionsfehler (alle Touren)", f"{model.reconstruction_error(dataset.X, recon_k):.3f}",
-           help="Mittlere quadratische Abweichung im (skalierten) Merkmalsraum - gleich der Summe der verworfenen Eigenwerte.")
+           help="Mittlere quadratische Abweichung im (skalierten) Merkmalsraum - gleich (n−1)/n mal der Summe der verworfenen Eigenwerte.")
 rc2.metric("Verworfene Varianz", f"{lost:.1f} %")
 
 st.markdown("---")
@@ -363,7 +363,7 @@ Jede weitere Komponente maximiert dieselbe Größe unter der Nebenbedingung, sen
 **Berechnung.** Statt $C$ zu bilden, zerlegt die Demo $X = U \Sigma V^\top$ (Singulärwertzerlegung): die Zeilen von $V^\top$ sind die Hauptkomponenten, $\lambda_i = \sigma_i^2 / (n-1)$.
 Numerisch stabiler als die Eigenzerlegung von $C$; die Vorzeichen werden deterministisch festgelegt (größte Ladung positiv).
 
-**Rekonstruktion.** Mit den ersten $k$ Komponenten $V_k$ ist $\hat X = X V_k V_k^\top$. Der mittlere quadratische Fehler ist exakt die Summe der verworfenen Eigenwerte:
+**Rekonstruktion.** Mit den ersten $k$ Komponenten $V_k$ ist $\hat X = X V_k V_k^\top$. Der mittlere quadratische Fehler ist exakt $(n-1)/n$ mal die Summe der verworfenen Eigenwerte:
 
 $$
 \frac{1}{n} \lVert X - \hat X \rVert_F^2 \;=\; \frac{n-1}{n} \sum_{i > k} \lambda_i .
@@ -390,6 +390,6 @@ st.markdown("---")
 
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Dimensionsreduktion: von PCA bis Autoencoder](https://sebastianhanisch.net/konzepte-dimensionsreduktion.html)."
 )

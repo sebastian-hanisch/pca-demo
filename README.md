@@ -9,14 +9,14 @@ Verfahren – die Hauptkomponentenanalyse (PCA) – und lässt stattdessen das *
 Zustellversuche), erzeugt aus **wenigen versteckten Faktoren** - die wahre Dimension q ist damit bekannt und prüfbar.
 
 **Einordnung in die Reihe (die Kanten des Graphen):** PCA ist die **Wurzel** der Dimensionsreduktion-Linie (eigene Sektion, bewusst nicht Teil der
-Clustering-Linie). Ihre eigene, ehrlich gezeigte Schwäche ist die **Linearitätsannahme** - genau daran setzen die geplanten Stücke an:
+Clustering-Linie). Ihre eigene, ehrlich gezeigte Schwäche ist die **Linearitätsannahme** - genau daran setzen die Folgestücke an:
 ```
 pca-demo → Isomap          (geodätische statt gerader Abstände)
 pca-demo → LLE             (lokal-lineare Rekonstruktion; Kontrast zu Isomap, kein Fix)
 pca-demo → t-SNE → UMAP → PaCMAP
 pca-demo → Autoencoder     (lineare Variante = PCA, nichtlineare = die Erweiterung)
 ```
-Noch nicht gebaut; diese Demo ist der Startpunkt.
+Alle gebaut (isomap-demo, lle-demo, tsne-demo, umap-demo, pacmap-demo, autoencoder-demo); diese Demo ist der Startpunkt.
 
 ## Was die Demo zeigt
 
@@ -51,14 +51,14 @@ zwei Komponenten fällt von 94 % auf 54 %. Eine Trustworthiness-Abnahme setzt er
   bei q < 4 teilen sich mehrere Gruppen einen Faktor) plus kleine Querladungen. Krümmung: `κ·B·h(z)` mit sin/cos, Quadraten und Produkten der Faktoren. Rauschen und
   Sonderfahrten kommen zuletzt hinzu, so dass dieselben Touren mit und ohne Ausreißer vergleichbar sind. Die Matrizen sind fest, nur Touren und Rauschen hängen vom Seed ab.
 - **PCA** (`pca_algorithm.py`, ohne sklearn): Zentrieren, optional Standardisieren, Singulärwertzerlegung; deterministische Vorzeichen (größte Ladung positiv).
-  Rekonstruktionsfehler bei *k* Komponenten = Summe der verworfenen Eigenwerte (Eckart-Young).
+  Rekonstruktionsfehler bei *k* Komponenten = (n−1)/n · Summe der verworfenen Eigenwerte (Eckart-Young).
 - **Auswertung** (`pca_evaluation.py`): k₉₀, Trustworthiness (Venna & Kaski, eigene Implementierung), Krümmungs-Sweep, Verdict-Kaskade (Einheiten-Falle → Krümmung → Ausreißer → Rauschen → sauberer Fall).
 
 ## Verifikation
 
 - PCA gegen `sklearn.decomposition.PCA` (Eigenwerte, Varianzanteile, Komponenten bis auf das Vorzeichen) mit und ohne Standardisierung; Orthonormalität; Varianzen summieren auf die Gesamtvarianz.
-- Rekonstruktionsfehler = Summe der verworfenen Eigenwerte (exakt), voller Rang = exakte Rekonstruktion; kein zufälliger Unterraum schlägt PCA (Eckart-Young).
-- Winkel-Kurve: Maximum = λ₁ bei PC1, Minimum = λ₂ 90° daneben; Varianz + Rekonstruktionsfehler = Gesamtvarianz für jeden Winkel.
+- Rekonstruktionsfehler = (n−1)/n · Summe der verworfenen Eigenwerte (exakt), voller Rang = exakte Rekonstruktion; kein zufälliger Unterraum schlägt PCA (Eckart-Young).
+- Winkel-Kurve: Maximum = λ₁ bei PC1, Minimum = λ₂ 90° daneben; Varianz + Rekonstruktionsfehler = Gesamtvarianz (bis auf den Faktor (n−1)/n) für jeden Winkel.
 - Standardisierung ist einheitenunabhängig (Merkmale mit Faktoren 1000…0.001 skaliert, gleiches Ergebnis), Rohdaten-PCA nicht.
 - Trustworthiness gegen `sklearn.manifold.trustworthiness` (Abweichung < 1e-9).
 - Generator: bei Krümmung 0 und kleinem Rauschen genau q signifikante Komponenten (q = 1…4); Krümmung und Rauschen erhöhen k₉₀; gleiche Touren mit/ohne Sonderfahrten.
@@ -95,6 +95,4 @@ pytest tests/ -v
 
 ---
 
-Teil des [Operations-Research-Demo-Portfolios](https://sebastianhanisch.net/demos.html) von
-[Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning.
-Interesse an einer maßgeschneiderten Lösung? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Dimensionsreduktion: von PCA bis Autoencoder](https://sebastianhanisch.net/konzepte-dimensionsreduktion.html).
