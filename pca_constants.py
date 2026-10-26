@@ -72,7 +72,7 @@ PRESET_HELP = {
         "die 2-D-Projektion behält die Nachbarschaft fast perfekt - PCA im Idealfall.",
     "Einheiten-Falle (Rohdaten)": "Dieselben Daten, aber in Einheiten wie gemessen (Meter, Kilogramm, Minuten): die Distanz in Metern hat die größte Zahlenspanne, die erste Komponente "
         "zeigt fast nur auf sie und erklärt 99,98 % der Varianz - ein Artefakt der Einheiten, keine Erkenntnis.",
-    "Rauschen verwischt den Knick": "Viel Messrauschen: hinter den zwei echten Komponenten bleibt so viel Varianz übrig, dass PCA 7-8 Komponenten für 90 % braucht - "
+    "Rauschen verwischt den Knick": "Viel Messrauschen: hinter den zwei echten Komponenten bleibt so viel Varianz übrig, dass PCA in diesem Preset 8 Komponenten für 90 % braucht - "
         "der Knick im Scree-Plot ist verwischt.",
     "Ausreißer ziehen die Achse": "10 % Sonderfahrten mit stark überhöhtem Zeitdruck: die erste Hauptkomponente dreht sich deutlich gegenüber denselben Touren ohne sie - "
         "Varianz zählt quadratisch, wenige extreme Touren dominieren.",

@@ -29,7 +29,7 @@ Alle gebaut (isomap-demo, lle-demo, tsne-demo, umap-demo, pacmap-demo, autoencod
 
 Vier Regler führen die Schwierigkeit hoch - jeder zeigt eine bekannte PCA-Falle **gemessen**, nicht behauptet:
 
-| Regler | Falle | Gemessen (Preset, Seed 7) |
+| Regler | Falle | Gemessen (Preset, Seed 7, 300 Touren) |
 |---|---|---|
 | **Krümmung** (Hauptschwäche) | gerade Achsen können eine gebogene Fläche nicht mit wenigen Koordinaten beschreiben | q = 2: k₉₀ steigt von 2 auf 5, die ersten 2 Komponenten behalten nur 54 % statt 93 % der Varianz, Trustworthiness 0.86 statt 0.99 |
 | **Skalierung** | Rohdaten in Meter/Kilogramm: die größte Zahlenspanne gewinnt | PC1 = 99.98 % der Varianz, 99.9 % davon auf "Distanz [m]"; standardisiert nur 53 % |

@@ -66,6 +66,21 @@ bevor weiter unten die Richtung live gedreht wird und die Frage "📐 Wie viele 
 beantwortet wird.
 """
 )
+
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/pca-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Stellen Sie sich vor, jede Lieferroute hat zwölf Kennzahlen: Distanz, Stopps, Ladegewicht, Verspätung und weitere. Diese Zahlen hängen zusammen, weil dahinter wenige gemeinsame Treiber stecken, etwa die Größe einer Tour und ihr Zeitdruck. Die **Hauptkomponentenanalyse (PCA)** nutzt das aus. Sie sucht eine **Richtung**, entlang der sich die Touren am meisten unterscheiden, und gibt jeder Tour dafür einen einzigen Wert, ihre Position auf dieser Geraden.
+
+Das Verfahren wählt die Richtung mit der **größten Streuung**. Genau dann bleibt von den Unterschieden zwischen den Touren am meisten erhalten. Was neben der Geraden liegt, geht verloren, der **Rekonstruktionsfehler**. Danach sucht PCA die nächste Richtung senkrecht zur ersten, und so weiter. Im Scree-Plot, einem Balkendiagramm, sehen Sie, wie viel Streuung jede Richtung trägt. Stecken wenige Treiber dahinter, fällt es nach den ersten hohen Balken abrupt ab, und man behält so viele Richtungen, wie hohe Balken vor dem Abfall stehen.
+
+Die Demo zeigt auch, wann das täuscht. Kennzahlen in Metern gewinnen gegen Kennzahlen in Stück, solange man sie nicht auf einen gemeinsamen Maßstab bringt. Sonderfahrten ziehen die Richtung zu sich. Liegen die Touren auf einer gebogenen Fläche, passen gerade Richtungen schlecht, und PCA braucht mehr Richtungen, als es Treiber gibt.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/pca-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
 st.caption(
     "Anders als die Fall-Demos im Portfolio, die an einem Anwendungsfall mehrere Verfahren vergleichen, zeigt diese Demo - erstes Stück der "
     "Dimensionsreduktion-Linie der \"Konzepte\"-Reihe - **ein** Verfahren an einem wachsenden Beispiel: PCA ist linear, und genau an dieser "
@@ -348,6 +363,28 @@ st.caption(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/pca-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind die zentrierten Kennzahlen aller Touren als Tabelle $X$ (eine Zeile je Tour, eine Spalte je Kennzahl). Gesucht ist eine Richtung $u$ der Länge eins, entlang der die Touren am stärksten streuen, dann die nächste Richtung senkrecht dazu und so weiter.
+
+| Symbol | Bedeutung |
+|---|---|
+| $X$, $n$, $d$ | zentrierte Datentabelle mit $n$ Touren (Zeilen) und $d$ Kennzahlen (Spalten) |
+| $u$ | Projektionsrichtung der Länge eins ($\lVert u\rVert=1$) |
+| $C$ | Kovarianzmatrix der Kennzahlen: welche steigen und fallen gemeinsam |
+| $\lambda_i$ | Eigenwert der Komponente $i$: Varianz (Streuung) der Touren entlang dieser Komponente |
+| $U$, $\Sigma$, $V$, $\sigma_i$ | Faktoren der Singulärwertzerlegung von $X$; $\sigma_i$ sind die Singulärwerte, $\lambda_i=\sigma_i^2/(n-1)$, die Zeilen von $V^\top$ sind die Hauptkomponenten |
+| $k$ | Zahl der behaltenen Komponenten (bei der Trustworthiness: Zahl der Nachbarn) |
+| $V_k$, $\hat X$ | die ersten $k$ Komponenten bzw. die daraus rekonstruierten Touren |
+| $q$ | wahre Zahl der versteckten Faktoren, aus denen die Demo die Kennzahlen erzeugt |
+| $r(i,j)$, $U_i$ | Rang von Tour $j$ unter den Nachbarn von Tour $i$ im Originalraum; $U_i$ sind die falschen Nachbarn von $i$ in der Projektion |
+| $T$ | Trustworthiness: 1 heißt, die Projektion hat keine falschen Nachbarn |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/pca-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Zielfunktion.** Gegeben zentrierte Daten $X \in \mathbb{R}^{n \times d}$ suche eine Richtung $u$ mit $\lVert u \rVert = 1$, die die Varianz der Projektion maximiert:
